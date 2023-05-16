@@ -1,0 +1,59 @@
+- set:
+    bridge:
+      domain:
+        br_default:
+          vlan:
+            '10': {}
+            '20': {}
+    router:
+      vrr:
+        enable: on
+    system:
+      hostname: leaf02
+    interface:
+      bond0:
+        bond:
+          member:
+            swp49: {}
+            swp50: {}
+        bridge:
+          domain:
+            br_default: {}
+        type: bond
+      lo:
+        ip:
+          address:
+            10.255.255.2/32: {}
+        type: loopback
+      swp2:
+        bridge:
+          domain:
+            br_default:
+              access: 20
+        type: swp
+      vlan10:
+        ip:
+          address:
+            10.0.10.3/24: {}
+          vrr:
+            address:
+              10.0.10.1/24: {}
+            mac-address: 00:00:00:00:1a:10
+        vlan: 10
+      vlan10,20:
+        ip:
+          vrr:
+            enable: on
+            state:
+              up: {}
+        type: svi
+      vlan20:
+        ip:
+          address:
+            10.0.20.3/24: {}
+          vrr:
+            address:
+              10.0.20.1/24: {}
+            mac-address: 00:00:00:00:1a:20
+        vlan: 20
+

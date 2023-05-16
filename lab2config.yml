@@ -1,0 +1,22 @@
+---
+- name: Configure leaf nodes with saved startup.yaml file
+  hosts: leaf
+  gather_facts: no
+  become: yes
+  tasks:
+    - name: Drop the saved NVUE yaml file
+      copy:
+        src: testconfigs/after_lab2/{{inventory_hostname}}_config.yaml
+        dest: /tmp/auto.yaml
+        owner: nvue
+        group: nvue
+        mode: 0644
+      notify:
+        -  nvue config replace
+        -  nvue config apply
+  handlers:
+    - name: nvue config replace
+      command: nv config replace /tmp/auto.yaml
+    - name: nvue config apply
+      command: nv config apply -y
+

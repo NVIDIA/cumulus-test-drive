@@ -1,0 +1,36 @@
+- set:
+    bridge:
+      domain:
+        br_default:
+          vlan:
+            '20': {}
+    router:
+      vrr:
+        enable: on
+    system:
+      hostname: leaf02
+    interface:
+      lo:
+        ip:
+          address:
+            10.255.255.2/32: {}
+        type: loopback
+      swp2:
+        bridge:
+          domain:
+            br_default:
+              access: 20
+        type: swp
+      vlan20:
+        ip:
+          address:
+            10.0.20.3/24: {}
+          vrr:
+            address:
+              10.0.20.1/24: {}
+            mac-address: 00:00:00:00:1a:20
+            enable: on
+            state:
+              up: {}
+        type: svi
+        vlan: 20

@@ -1,0 +1,40 @@
+- set:
+    router:
+      bgp:
+        enable: on
+        router-id: 10.255.255.101
+    system:
+      hostname: spine01
+    vrf:
+      default:
+        router:
+          bgp:
+            address-family:
+              ipv4-unicast:
+                enable: on
+                network:
+                  10.255.255.101/32: {}
+            autonomous-system: 65201
+            enable: on
+            neighbor:
+              swp1:
+                remote-as: external
+                type: unnumbered
+              swp2:
+                remote-as: external
+                type: unnumbered
+            path-selection:
+              multipath:
+                aspath-ignore: on
+    interface:
+      lo:
+        ip:
+          address:
+            10.255.255.101/32: {}
+        type: loopback
+      swp1-2:
+        link:
+          state:
+            up: {}
+        type: swp
+

@@ -1,0 +1,36 @@
+---
+#- hosts: localhost:spine:leaf:host
+#  gather_facts: no
+#  tasks:
+#    - name: remove netq
+#      become: yes
+#      apt:
+#        name:
+#          - netq-apps
+#          - netq-agent
+#        state: absent
+- hosts: host
+  gather_facts: no
+  tasks:
+    - name: Setting up the test hosts config
+      become: yes
+      copy:
+        src: lab2-configurations/{{inventory_hostname}}/config.yaml
+        dest: /etc/netplan/config.yaml
+      notify: apply interface config
+
+    - name: install traceroute
+      become: yes
+      apt:
+        name: traceroute
+        state: present
+                
+    - name: flush arp
+      become: yes
+      command: ip -s -s neigh flush all
+      no_log: true
+
+  handlers:
+    - name: apply interface config
+      become: yes
+      command: netplan apply

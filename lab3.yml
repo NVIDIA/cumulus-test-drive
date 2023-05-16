@@ -1,0 +1,37 @@
+---
+- name: Getting you ready for lab3
+  hosts: host
+  gather_facts: no
+  become: yes
+  tasks:
+    - name: Dropping in config
+      copy:
+        src: lab3-configurations/{{inventory_hostname}}/config.yaml
+        dest: /etc/netplan/config.yaml
+      notify: apply interface config
+
+  handlers:
+    - name: apply interface config
+      become: yes
+      command: netplan apply
+
+- name: Getting you ready for lab3
+  hosts: leaf
+  gather_facts: no
+  become: yes
+  tasks:
+    - name: Drop the nvue yaml
+      copy:
+        src: lab3-configurations/{{inventory_hostname}}/config.yaml
+        dest: /tmp/auto.yaml
+        owner: nvue
+        group: nvue
+        mode: 0644
+      notify:
+        -  nvue config replace
+        -  nvue config apply
+  handlers:
+    - name: nvue config replace
+      command: nv config replace /tmp/auto.yaml
+    - name: nvue config apply
+      command: nv config apply -y
