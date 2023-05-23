@@ -22,6 +22,10 @@ The lab guide is available upon request and is provided to the attendees of the 
 | testdrive_topology.pptx      | pptx format topology diagram       |
 | testdrive_topology.svg       | svg format topology diagram        |
 
+
+# Topology Diagram
+<img src="testdrive_topology.svg" width="800px">
+
 # virt-workshop-testing
 
 ## Files/Folders
