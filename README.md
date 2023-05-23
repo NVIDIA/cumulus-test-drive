@@ -46,3 +46,8 @@ The script will run and send all output to the console. This output can be check
 1. Run the CI/CD workflow located [here](https://gitlab.com/lsimpson762/virt-workshop-snapshot-creation).
 2. The CI/CD workflow will create a snapshot and a live simulation (clone) in order to test the snapshot.
 3. Use the live simulation and login to its `oob-mgmt-server`.
+
+
+
+# LICENSE
+[Apache 2.0 License for this project](LICENSE)
