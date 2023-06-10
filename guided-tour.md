@@ -2,7 +2,7 @@
 
 ## Topology Diagram
 ![Workshop Topology diagram-1](https://raw.githubusercontent.com/NVIDIA/cumulus-test-drive/main/CL_Workshop.svg)
-![Workshop Topology diagram-2](https://github.com/NVIDIA/cumulus-test-drive/raw/main/CL_Workshop.svg)
+
 
 ## Lab 1: Verifying Lab Connectivity and License Installation
 
