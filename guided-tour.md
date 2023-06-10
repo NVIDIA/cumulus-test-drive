@@ -1,7 +1,7 @@
 # Cumulus Linux Test Drive: Lab Guide
 
 ## Topology Diagram
-![Workshop Topology diagram](https://github.com/NVIDIA/cumulus-test-drive/raw/main/CL_Workshop.svg)
+![Workshop Topology diagram](https://raw.githubusercontent.com/NVIDIA/cumulus-test-drive/main/CL_Workshop.svg)
 
 ## Lab 1: Verifying Lab Connectivity and License Installation
 
