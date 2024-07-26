@@ -32,7 +32,7 @@ In Lab 1, we'll access the oob-mgmt-server .  The first part of this lab include
 ubuntu@oob-mgmt-server:~$ cd Test-Drive-Automation
 ubuntu@oob-mgmt-server:~/Test-Drive-Automation$
 ```
-2. Perform a `git pull` to sync/fetch changes
+2. Switch to `CL_demo_5.6` branch and perform a `git pull` to sync/fetch changes
 ```
 cumulus@oob-mgmt-server:~/Test-Drive-Automation$ git checkout CL_demo_5.6
 Switched to branch 'CL_demo_5.6'
