@@ -4,6 +4,39 @@
         enable: on
         router-id: 10.255.255.101
     system:
+      aaa:
+        class:
+          nvapply:
+            action: allow
+            command-path:
+              /:
+                permission: all
+          nvshow:
+            action: allow
+            command-path:
+              /:
+                permission: ro
+          sudo:
+            action: allow
+            command-path:
+              /:
+                permission: all
+        role:
+          nvue-admin:
+            class:
+              nvapply: {}
+          nvue-monitor:
+            class:
+              nvshow: {}
+          system-admin:
+            class:
+              nvapply: {}
+              sudo: {}
+        user:
+          cumulus:
+            full-name: cumulus,,,
+            hashed-password: $5$.bZqNaSoq2PqQPCV$LKR8zu5u7whr1F8YRLYtOrO7NaF9kE7EEHw.ER3ylO4
+            role: system-admin
       hostname: spine01
     vrf:
       default:

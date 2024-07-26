@@ -43,7 +43,6 @@
             full-name: cumulus,,,
             hashed-password: $5$.bZqNaSoq2PqQPCV$LKR8zu5u7whr1F8YRLYtOrO7NaF9kE7EEHw.ER3ylO4
             role: system-admin
-
     interface:
       bond0:
         bond:
