@@ -3,6 +3,18 @@
 ## Topology Diagram
 ![Workshop Topology diagram-1](https://raw.githubusercontent.com/NVIDIA/cumulus-test-drive/main/CL_Workshop.svg)
 
+## Lab Credentials
+
+The `oob-mgmt-server` password needs to be updated on first-login.
+
+| System Name | Username | Password |
+| --- | --- | --- |
+| oob-mgmt-server | ubuntu | nvidia |
+| leaf01 | cumulus | Cumu1usLinux! |
+| leaf02 | cumulus | Cumu1usLinux! |
+| spine01 | cumulus | Cumu1usLinux! |
+| server01 | ubuntu | nvidia |
+| server02 | ubuntu | nvidia |
 
 ## Lab 1: Verifying Lab Connectivity
 
@@ -139,18 +151,20 @@ cumulus@leaf02:mgmt:~$ nv config apply
 
 1. **On leaf01** : Check that the address has been applied.
 ```
+cumulus@leaf01:mgmt:~$ nv show interface lo
                          operational        applied
 -----------------------  -----------------  ---------------
 type                     loopback           loopback
 router
-  adaptive-routing
-    enable                                  off
   ospf
-    enable                                  off
-  ospf6
     enable                                  off
   pim
     enable                                  off
+  ospf6
+    enable                                  off
+neighbor
+  [ipv4]
+  [ipv6]
 ip
   igmp
     enable                                  off
@@ -167,16 +181,19 @@ link
   mtu                    65536
   state                  up
   stats
-    carrier-transitions  0
-    in-bytes             210.70 KB
+    in-bytes             776.02 KB
+    in-pkts              11960
     in-drops             0
     in-errors            0
-    in-pkts              3266
-    out-bytes            210.70 KB
+    out-bytes            776.02 KB
+    out-pkts             11960
     out-drops            0
     out-errors           0
-    out-pkts             3266
+    carrier-transitions  0
   mac                    00:00:00:00:00:00
+  protodown              disabled
+  oper-status            unknown
+  admin-status           up
 ifindex                  1
 
 
@@ -189,14 +206,15 @@ cumulus@leaf02:mgmt:~$ nv show interface lo
 -----------------------  -----------------  ---------------
 type                     loopback           loopback
 router
-  adaptive-routing
-    enable                                  off
   ospf
-    enable                                  off
-  ospf6
     enable                                  off
   pim
     enable                                  off
+  ospf6
+    enable                                  off
+neighbor
+  [ipv4]
+  [ipv6]
 ip
   igmp
     enable                                  off
@@ -213,16 +231,19 @@ link
   mtu                    65536
   state                  up
   stats
-    carrier-transitions  0
-    in-bytes             213.07 KB
+    in-bytes             792.01 KB
+    in-pkts              12208
     in-drops             0
     in-errors            0
-    in-pkts              3304
-    out-bytes            213.07 KB
+    out-bytes            792.01 KB
+    out-pkts             12208
     out-drops            0
     out-errors           0
-    out-pkts             3304
+    carrier-transitions  0
   mac                    00:00:00:00:00:00
+  protodown              disabled
+  oper-status            unknown
+  admin-status           up
 ifindex                  1
 
 ```
@@ -257,199 +278,219 @@ cumulus@leaf02:mgmt:~$ nv config apply
 ```
 cumulus@leaf01:mgmt:~$ nv show interface bond0
                           operational        applied
-------------------------  -----------------  ----------
-type                      bond               bond
-[acl]
-bond
-  down-delay              0                  0
-  lacp-bypass             off                off
-  lacp-rate               fast               fast
-  mode                                       lacp
-  up-delay                0                  0
-  [member]                swp49              swp49
-  [member]                swp50              swp50
-  mlag
-    enable                                   off
-bridge
-  [domain]                br_default         br_default
-evpn
-  multihoming
-    uplink                                   off
-    segment
-      enable                                 off
-ptp
-  enable                                     off
+------------------------  ----------------------------  -------
+type                      bond                          bond
 router
-  adaptive-routing
-    enable                                   off
-  ospf
-    enable                                   off
-  ospf6
-    enable                                   off
   pbr
     [map]
+  ospf
+    enable                                              off
   pim
-    enable                                   off
+    enable                                              off
+  adaptive-routing
+    enable                                              off
+  ospf6
+    enable                                              off
+lldp
+  dcbx-pfc-tlv            off
+  dcbx-ets-config-tlv     off
+  dcbx-ets-recomm-tlv     off
+  [neighbor]
+bond
+  down-delay              0                             0
+  lacp-bypass             off                           off
+  lacp-rate               fast                          fast
+  mode                                                  lacp
+  up-delay                0                             0
+  [member]                swp49                         swp49
+  [member]                swp50                         swp50
+  mlag
+    enable                                              off
+evpn
+  multihoming
+    uplink                                              off
+    segment
+      enable                                            off
+ptp
+  enable                                                off
+[acl]
+neighbor
+  [ipv4]
+  [ipv6]
 ip
-  igmp
-    enable                                   off
-  ipv4
-    forward                                  on
-  ipv6
-    enable                                   on
-    forward                                  on
-  neighbor-discovery
-    enable                                   on
-    [dnssl]
-    home-agent
-      enable                                 off
-    [prefix]
-    [rdnss]
-    router-advertisement
-      enable                                 on
-      fast-retransmit                        on
-      hop-limit                              64
-      interval                               600000
-      interval-option                        off
-      lifetime                               1800
-      managed-config                         off
-      other-config                           off
-      reachable-time                         0
-      retransmit-time                        0
-      router-preference                      medium
   vrrp
-    enable                                   off
-  vrf                                        default
+    enable                                              off
+  igmp
+    enable                                              off
+  neighbor-discovery
+    enable                                              on
+    router-advertisement
+      enable                                            off
+    home-agent
+      enable                                            off
+    [rdnss]
+    [dnssl]
+    [prefix]
+  ipv4
+    forward                                             on
+  ipv6
+    enable                                              on
+    forward                                             on
+  vrf                                                   default
+  [address]               fe80::4ab0:2dff:fe8b:5f13/64
   [gateway]
 link
-  auto-negotiate          off                on
-  duplex                  full               full
-  speed                   2G                 auto
-  fec                                        auto
-  mtu                     9216               9216
-  state                   up                 up
+  auto-negotiate          off                           on
+  duplex                  full                          full
+  speed                   2G                            auto
+  fec                                                   auto
+  mtu                     9216                          9216
+  state                   up                            up
+  flap-protection
+    enable                                              on
   stats
-    carrier-transitions   1
-    in-bytes              522.45 KB
+    in-bytes              3.72 KB
+    in-pkts               25
     in-drops              0
     in-errors             0
-    in-pkts               4140
-    out-bytes             559.58 KB
+    out-bytes             5.61 KB
+    out-pkts              40
     out-drops             0
     out-errors            0
-    out-pkts              4837
-  mac                     48:b0:2d:0c:c6:b9
-ifindex                   15
+    carrier-transitions   1
+  mac                     48:b0:2d:8b:5f:13
+  protodown               disabled
+  oper-status             up
+  admin-status            up
+ifindex                   9
 
-cumulus@leaf01:mgmt:~$ net show interface bonds
-    Name   Speed   MTU  Mode     Summary
---  -----  -----  ----  -------  ----------------------------------
-UP  BOND0  2G     1500  802.3ad  Bond Members: swp49(UP), swp50(UP)
+cumulus@leaf01:mgmt:~$ nv show interface bond0 bond
+             operational  applied
+-----------  -----------  -------
+down-delay   0            0
+lacp-bypass  off          off
+lacp-rate    fast         fast
+mode                      lacp
+up-delay     0            0
+[member]     swp49        swp49
+[member]     swp50        swp50
+mlag
+  enable                  off
 
-cumulus@leaf01:mgmt:~$ net show interface bondmems
-    Name   Speed   MTU  Mode     Summary
---  -----  -----  ----  -------  -----------------
-UP  swp49  1G     1500  LACP-UP  Master: BOND0(UP)
-UP  swp50  1G     1500  LACP-UP  Master: BOND0(UP)
+cumulus@leaf01:mgmt:~$ nv show interface bond0 bond member
+       bonding-state  mii-status
+-----  -------------  ----------
+swp49  active         up
+swp50  active         up
 
 ```
 ```
 cumulus@leaf02:mgmt:~$ nv show interface bond0
                           operational        applied
-------------------------  -----------------  ----------
-type                      bond               bond
-[acl]
-bond
-  down-delay              0                  0
-  lacp-bypass             off                off
-  lacp-rate               fast               fast
-  mode                                       lacp
-  up-delay                0                  0
-  [member]                swp49              swp49
-  [member]                swp50              swp50
-  mlag
-    enable                                   off
-bridge
-  [domain]                br_default         br_default
-evpn
-  multihoming
-    uplink                                   off
-    segment
-      enable                                 off
-ptp
-  enable                                     off
+------------------------  ----------------------------  -------
+type                      bond                          bond
 router
-  adaptive-routing
-    enable                                   off
-  ospf
-    enable                                   off
-  ospf6
-    enable                                   off
   pbr
     [map]
+  ospf
+    enable                                              off
   pim
-    enable                                   off
+    enable                                              off
+  adaptive-routing
+    enable                                              off
+  ospf6
+    enable                                              off
+lldp
+  dcbx-pfc-tlv            off
+  dcbx-ets-config-tlv     off
+  dcbx-ets-recomm-tlv     off
+  [neighbor]
+bond
+  down-delay              0                             0
+  lacp-bypass             off                           off
+  lacp-rate               fast                          fast
+  mode                                                  lacp
+  up-delay                0                             0
+  [member]                swp49                         swp49
+  [member]                swp50                         swp50
+  mlag
+    enable                                              off
+evpn
+  multihoming
+    uplink                                              off
+    segment
+      enable                                            off
+ptp
+  enable                                                off
+[acl]
+neighbor
+  [ipv4]
+  [ipv6]
 ip
-  igmp
-    enable                                   off
-  ipv4
-    forward                                  on
-  ipv6
-    enable                                   on
-    forward                                  on
-  neighbor-discovery
-    enable                                   on
-    [dnssl]
-    home-agent
-      enable                                 off
-    [prefix]
-    [rdnss]
-    router-advertisement
-      enable                                 on
-      fast-retransmit                        on
-      hop-limit                              64
-      interval                               600000
-      interval-option                        off
-      lifetime                               1800
-      managed-config                         off
-      other-config                           off
-      reachable-time                         0
-      retransmit-time                        0
-      router-preference                      medium
   vrrp
-    enable                                   off
-  vrf                                        default
+    enable                                              off
+  igmp
+    enable                                              off
+  neighbor-discovery
+    enable                                              on
+    router-advertisement
+      enable                                            off
+    home-agent
+      enable                                            off
+    [rdnss]
+    [dnssl]
+    [prefix]
+  ipv4
+    forward                                             on
+  ipv6
+    enable                                              on
+    forward                                             on
+  vrf                                                   default
+  [address]               fe80::4ab0:2dff:fe44:7bd7/64
   [gateway]
 link
-  auto-negotiate          off                on
-  duplex                  full               full
-  speed                   2G                 auto
-  fec                                        auto
-  mtu                     9216               9216
-  state                   up                 up
+  auto-negotiate          off                           on
+  duplex                  full                          full
+  speed                   2G                            auto
+  fec                                                   auto
+  mtu                     9216                          9216
+  state                   up                            up
+  flap-protection
+    enable                                              on
   stats
-    carrier-transitions   1
-    in-bytes              574.45 KB
+    in-bytes              15.46 KB
+    in-pkts               119
     in-drops              0
     in-errors             0
-    in-pkts               4974
-    out-bytes             539.08 KB
+    out-bytes             17.66 KB
+    out-pkts              138
     out-drops             0
     out-errors            0
-    out-pkts              4273
-  mac                     48:b0:2d:10:ba:d9
-ifindex                   15
+    carrier-transitions   1
+  mac                     48:b0:2d:44:7b:d7
+  protodown               disabled
+  oper-status             up
+  admin-status            up
+ifindex                   9
 
-cumulus@leaf02:mgmt:~$ net show interface bonds
-    Name   Speed   MTU  Mode     Summary
---  -----  -----  ----  -------  ----------------------------------
-UP  BOND0  2G     1500  802.3ad  Bond Members: swp49(UP), swp50(UP)
+cumulus@leaf02:mgmt:~$ nv show interface bond0 bond
+             operational  applied
+-----------  -----------  -------
+down-delay   0            0
+lacp-bypass  off          off
+lacp-rate    fast         fast
+mode                      lacp
+up-delay     0            0
+[member]     swp49        swp49
+[member]     swp50        swp50
+mlag
+  enable                  off
 
-cumulus@leaf02:mgmt:~$ net show interface bondmems
-    Name   Speed   MTU  Mode     Summary
---  -----  -----  ----  -------  -----------------
-UP  swp49  1G     1500  LACP-UP  Master: BOND0(UP)
-UP  swp50  1G     1500  LACP-UP  Master: BOND0(UP)
+cumulus@leaf02:mgmt:~$ nv show interface bond0 bond member
+       bonding-state  mii-status
+-----  -------------  ----------
+swp49  active         up
+swp50  active         up
 
 ```
 
@@ -510,29 +551,48 @@ nv config apply
 
 1. **On leaf01** : Verify the configuration on leaf01 by checking that swp1 and BOND0 are part of the bridge.
 ```
-cumulus@leaf01$ net show bridge vlan
+cumulus@leaf01$ nv show bridge domain br_default
+Bridge info:
+    mac-address         : 44:38:39:22:01:80
+    type                : vlan-aware
+    encap               : 802.1Q
+    ageing              : 1800
+    stp mode            : rstp
+    vlan-vni-offset     : -
 
-Interface   VLAN    Flags
------------ ------  ---------------------
-swp1        10      PVID, Egress Untagged
-BOND0       1       PVID, Egress Untagged
-            10
-            20
+Bridge Vlan Info :
+untagged      tagged
+------------- ---------------------------------------------------
+1             10,20
+
+Bridge Port Info:
+Port           State
+-------------- ---------------
+bond0          forwarding
+swp1           forwarding
 ```
 2. **On leaf02** : Verify the same configuration on leaf02 by checking that swp2 and BOND0 are part of the bridge.
 ```
-cumulus@leaf02$ net show bridge vlan
+cumulus@leaf02$ nv show bridge domain br_default
+Bridge info:
+    mac-address         : 44:38:39:22:01:c8
+    type                : vlan-aware
+    encap               : 802.1Q
+    ageing              : 1800
+    stp mode            : rstp
+    vlan-vni-offset     : -
 
-Interface   VLAN    Flags
------------ ------  ---------------------
-swp2        20      PVID, Egress Untagged
-BOND0       1         PVID, Egress Untagged
-            10
-            20
+Bridge Vlan Info :
+untagged      tagged
+------------- ---------------------------------------------------
+1             10,20
+
+Bridge Port Info:
+Port           State
+-------------- ---------------
+bond0          forwarding
+swp2           forwarding
 ```
- **Important things to observe:**
-- Access ports (`swpN`) are only a single line with the VLAN associated with the port and flags `PVID, Egress Untagged`
-- Trunk ports are multiple lines with each VLAN associated with the trunk listed. The native vlan will show flags `PVID, Egress Untagged`
 
 ##
 ## Configure SVIs and VRR on leaf01 and leaf02
@@ -563,14 +623,14 @@ cumulus@leaf01:mgmt:~$ nv set interface vlan20 ip address 10.0.20.2/24
 ```
 cumulus@leaf01:mgmt:~$ nv set interface vlan10 ip vrr address 10.0.10.1/24
 cumulus@leaf01:mgmt:~$ nv set interface vlan10 ip vrr mac-address 00:00:00:00:1a:10
-nv set interface vlan10 ip vrr state up
+cumulus@leaf01:mgmt:~$ nv set interface vlan10 ip vrr state up
 ```
 
 4. On leaf01 : Apply a VRR address and MAC for vlan20.
 ```
 cumulus@leaf01:mgmt:~$ nv set interface vlan20 ip vrr address 10.0.20.1/24
 cumulus@leaf01:mgmt:~$ nv set interface vlan20 ip vrr mac-address 00:00:00:00:1a:20
-nv set interface vlan20 ip vrr state up
+cumulus@leaf01:mgmt:~$ nv set interface vlan20 ip vrr state up
 ```
 
 5. On leaf01: Apply the changes.
@@ -609,11 +669,11 @@ nv config apply
 
 1. **On server01:** Test connectivity from server01 to the VRR gateway address. The login and password on servers is `ubuntu` / `nvidia`
 ```
-ubuntu@server01:~$ ping 10.0.10.1
+ubuntu@server01:~$ ping 10.0.10.1 -c 2
 PING 10.0.10.1 (10.0.10.1) 56(84) bytes of data.
 64 bytes from 10.0.10.1: icmp_seq=1 ttl=64 time=0.686 ms
 64 bytes from 10.0.10.1: icmp_seq=2 ttl=64 time=0.922 ms
-^C
+
 --- 10.0.10.1 ping statistics ---
 2 packets transmitted, 2 received, 0% packet loss, time 1001ms
 rtt min/avg/max/mdev = 0.686/0.804/0.922/0.118 ms
@@ -621,11 +681,11 @@ rtt min/avg/max/mdev = 0.686/0.804/0.922/0.118 ms
 
 2. On server01: Test connectivity from server01 to leaf01 real IP address.
 ```
-ubuntu@server01:~$ ping 10.0.10.2
+ubuntu@server01:~$ ping 10.0.10.2 -c 2
 PING 10.0.10.2 (10.0.10.2) 56(84) bytes of data.
 64 bytes from 10.0.10.2: icmp_seq=1 ttl=64 time=0.887 ms
 64 bytes from 10.0.10.2: icmp_seq=2 ttl=64 time=0.835 ms
-^C
+
 --- 10.0.10.2 ping statistics ---
 2 packets transmitted, 2 received, 0% packet loss, time 1001ms
 rtt min/avg/max/mdev = 0.835/0.861/0.887/0.026 ms
@@ -633,11 +693,11 @@ rtt min/avg/max/mdev = 0.835/0.861/0.887/0.026 ms
 
 3. On server01: Test connectivity from server01 to leaf02 real IP address.
 ```
-ubuntu@server01:~$ ping 10.0.10.3
+ubuntu@server01:~$ ping 10.0.10.3 -c 2
 PING 10.0.10.3 (10.0.10.3) 56(84) bytes of data.
 64 bytes from 10.0.10.3: icmp_seq=1 ttl=64 time=0.528 ms
 64 bytes from 10.0.10.3: icmp_seq=2 ttl=64 time=0.876 ms
-^C
+
 --- 10.0.10.3 ping statistics ---
 2 packets transmitted, 2 received, 0% packet loss, time 1001ms
 rtt min/avg/max/mdev = 0.528/0.702/0.876/0.174 ms
@@ -657,31 +717,31 @@ fe80::4638:39ff:fe00:b dev eth1 lladdr 44:38:39:00:00:0b router REACHABLE
 
 5. **On server02**: Repeat the same connectivity tests in step 10-13 from server02 to switch IP addresses.
 ```
-ubuntu@server02:~$ ping 10.0.20.1
+ubuntu@server02:~$ ping 10.0.20.1 -c 2
 PING 10.0.20.1 (10.0.20.1) 56(84) bytes of data.
 64 bytes from 10.0.20.1: icmp_seq=1 ttl=64 time=1.22 ms
 64 bytes from 10.0.20.1: icmp_seq=2 ttl=64 time=0.672 ms
-^C
+
 --- 10.0.20.1 ping statistics ---
 2 packets transmitted, 2 received, 0% packet loss, time 1001ms
 rtt min/avg/max/mdev = 0.672/0.949/1.226/0.277 ms
 ```
 ```
-ubuntu@server02:~$ ping 10.0.20.2
+ubuntu@server02:~$ ping 10.0.20.2 -c 2
 PING 10.0.20.2 (10.0.20.2) 56(84) bytes of data.
 64 bytes from 10.0.20.2: icmp_seq=1 ttl=64 time=0.735 ms
 64 bytes from 10.0.20.2: icmp_seq=2 ttl=64 time=1.02 ms
-^C
+
 --- 10.0.20.2 ping statistics ---
 2 packets transmitted, 2 received, 0% packet loss, time 1001ms
 rtt min/avg/max/mdev = 0.735/0.882/1.029/0.147 ms
 ```
 ```
-ubuntu@server02:~$ ping 10.0.20.3
+ubuntu@server02:~$ ping 10.0.20.3 -c 2
 PING 10.0.20.3 (10.0.20.3) 56(84) bytes of data.
 64 bytes from 10.0.20.3: icmp_seq=1 ttl=64 time=0.993 ms
 64 bytes from 10.0.20.3: icmp_seq=2 ttl=64 time=1.08 ms
-^C
+
 --- 10.0.20.3 ping statistics ---
 2 packets transmitted, 2 received, 0% packet loss, time 1002ms
 rtt min/avg/max/mdev = 0.993/1.040/1.087/0.047 ms
@@ -699,7 +759,7 @@ fe80::4638:39ff:fe00:b dev eth2 lladdr 44:38:39:00:00:0b router STALE
 
 6. **On server01 and server02**: Ping to verify connectivity between the servers.
 ```
-ubuntu@server01:~$ ping 10.0.20.102
+ubuntu@server01:~$ ping 10.0.20.102 -c 2
 PING 10.0.20.102 (10.0.20.102) 56(84) bytes of data.
 64 bytes from 10.0.20.102: icmp_seq=1 ttl=63 time=0.790 ms
 64 bytes from 10.0.20.102: icmp_seq=2 ttl=63 time=1.35 ms
@@ -709,11 +769,11 @@ PING 10.0.20.102 (10.0.20.102) 56(84) bytes of data.
 rtt min/avg/max/mdev = 0.790/1.070/1.351/0.282 ms
 ```
 ```
-ubuntu@server02:~$  ping 10.0.10.101
+ubuntu@server02:~$  ping 10.0.10.101 -c 2
 PING 10.0.10.101 (10.0.10.101) 56(84) bytes of data.
 64 bytes from 10.0.10.101: icmp_seq=1 ttl=63 time=1.08 ms
 64 bytes from 10.0.10.101: icmp_seq=2 ttl=63 time=1.36 ms
-^C
+
 --- 10.0.10.101 ping statistics ---
 2 packets transmitted, 2 received, 0% packet loss, time 1001ms
 rtt min/avg/max/mdev = 1.089/1.225/1.361/0.136 ms
@@ -739,35 +799,49 @@ ubuntu@server02:~$
 
 1. **On leaf01 and leaf02:** Check to verify that the MAC addresses are learned correctly.
 ```
-cumulus@leaf01:mgmt:~$ nv show bridge domain br_default mac-table
-   age   bridge-domain  entry-type  interface   last-update  MAC address        src-vni  vlan  vni  Summary
--  ----  -------------  ----------  ----------  -----------  -----------------  -------  ----  ---  -------
-0  3     br_default                 swp1        110          48:b0:2d:f1:21:f0           10
-1  4856  br_default     permanent   swp1        4856         48:b0:2d:de:f4:11
-2                       permanent   br_default               00:00:00:00:1a:10
-3                       permanent   br_default               00:00:00:00:1a:20
-4  2138  br_default     permanent   br_default  2138         44:38:39:22:01:80           20
-5  93    br_default                 bond0       2017         48:b0:2d:15:93:0e           20
-6  92    br_default                 bond0       92           44:38:39:22:01:8a           10
-7  22    br_default                 bond0       2542         48:b0:2d:12:7f:72           1
-8  22    br_default                 bond0       2554         48:b0:2d:10:ba:d9           1
-9  2556  br_default     permanent   bond0       2556         48:b0:2d:0c:c6:b9
+cumulus@leaf01:mgmt:~$ nv  show bridge domain br_default mac-table
+entry-id  MAC address        vlan  interface   remote-dst  src-vni  entry-type  last-update  age
+--------  -----------------  ----  ----------  ----------  -------  ----------  -----------  -------
+1         48:b0:2d:db:95:44  10    swp1                                         0:00:00      0:01:43
+2         48:b0:2d:f8:3d:4c        swp1                             permanent   0:16:37      0:16:37
+3         48:b0:2d:46:ba:d2  20    bond0                                        0:00:29      0:07:15
+4         00:00:00:00:1a:20  20    bond0                                        0:00:39      0:10:08
+5         44:38:39:22:01:c8  20    bond0                                        0:00:24      0:10:08
+6         44:38:39:22:01:c8  10    bond0                                        0:01:43      0:04:22
+7         44:38:39:22:01:c8  1     bond0                                        0:14:17      0:14:19
+8         48:b0:2d:44:7b:d7  1     bond0                                        0:00:27      0:16:27
+9         48:b0:2d:4e:b6:de  1     bond0                                        0:00:27      0:16:27
+10        48:b0:2d:8b:5f:13  1     bond0                            permanent   0:16:37      0:16:37
+11        48:b0:2d:8b:5f:13        bond0                            permanent   0:16:37      0:16:37
+12        00:00:00:00:1a:10        br_default                       permanent
+13        44:38:39:22:01:80  20    br_default                       permanent   0:10:34      0:10:34
+14        00:00:00:00:1a:10  10    br_default                       permanent   0:10:34      0:10:34
+15        44:38:39:22:01:80  10    br_default                       permanent   0:10:34      0:10:34
+16        44:38:39:22:01:80  1     br_default                       permanent   0:16:37      0:16:37
+17        44:38:39:22:01:80        br_default                       permanent   0:16:37      0:16:37
 
 ```
 ```
 cumulus@leaf02:mgmt:~$ nv show bridge domain br_default mac-table
-   age   bridge-domain  entry-type  interface   last-update  MAC address        src-vni  vlan  vni  Summary
--  ----  -------------  ----------  ----------  -----------  -----------------  -------  ----  ---  -------
-0  2     br_default                 swp2        133          48:b0:2d:15:93:0e           20
-1  4878  br_default     permanent   swp2        4878         48:b0:2d:3b:a0:f4
-2                       permanent   br_default               00:00:00:00:1a:20
-3                       permanent   br_default               00:00:00:00:1a:10
-4  2144  br_default     permanent   br_default  2144         44:38:39:22:01:8a           10
-5  114   br_default                 bond0       2107         48:b0:2d:f1:21:f0           10
-6  115   br_default                 bond0       115          44:38:39:22:01:80           20
-7  14    br_default                 bond0       2564         48:b0:2d:eb:69:d7           1
-8  1     br_default                 bond0       2578         48:b0:2d:0c:c6:b9           1
-9  2593  br_default     permanent   bond0       2593         48:b0:2d:10:ba:d9
+entry-id  MAC address        vlan  interface   remote-dst  src-vni  entry-type  last-update  age
+--------  -----------------  ----  ----------  ----------  -------  ----------  -----------  -------
+1         48:b0:2d:46:ba:d2  20    swp2                                         0:00:30      0:02:11
+2         48:b0:2d:cc:6c:c4        swp2                             permanent   0:16:04      0:16:04
+3         48:b0:2d:db:95:44  10    bond0                                        0:01:07      0:07:25
+4         44:38:39:22:01:80  20    bond0                                        0:02:11      0:02:11
+5         44:38:39:22:01:80  10    bond0                                        0:01:09      0:12:17
+6         48:b0:2d:19:9b:8a  1     bond0                                        0:00:09      0:15:39
+7         48:b0:2d:8b:5f:13  1     bond0                                        0:00:00      0:16:02
+8         48:b0:2d:44:7b:d7  1     bond0                            permanent   0:16:04      0:16:04
+9         48:b0:2d:44:7b:d7        bond0                            permanent   0:16:04      0:16:04
+10        00:00:00:00:1a:10        br_default                       permanent
+11        00:00:00:00:1a:20        br_default                       permanent
+12        00:00:00:00:1a:20  20    br_default                       permanent   0:11:50      0:11:50
+13        44:38:39:22:01:c8  20    br_default                       permanent   0:11:50      0:11:50
+14        44:38:39:22:01:c8  10    br_default                       permanent   0:11:50      0:11:50
+15        00:00:00:00:1a:10  10    br_default                       permanent   0:11:50      0:11:50
+16        44:38:39:22:01:c8  1     br_default                       permanent   0:16:04      0:16:04
+17        44:38:39:22:01:c8        br_default                       permanent   0:16:04      0:16:04
 
 ```
 **Important things to observe:**
@@ -874,68 +948,62 @@ nv config apply
 
 1. **On spine01:** Verify BGP peering between spine and leafs.
 ```
-cumulus@spine01:mgmt:~$ net show bgp summary
+cumulus@spine01:mgmt:~$ sudo vtysh
 
-show bgp ipv4 unicast summary
-=============================
+Hello, this is FRRouting (version 8.4.3).
+Copyright 1996-2005 Kunihiro Ishiguro, et al.
+
+spine01# show ip bgp summary
+
+IPv4 Unicast Summary (VRF default):
 BGP router identifier 10.255.255.101, local AS number 65201 vrf-id 0
 BGP table version 0
 RIB entries 0, using 0 bytes of memory
-Peers 2, using 39 KiB of memory
+Peers 2, using 40 KiB of memory
 
-Neighbor        V         AS MsgRcvd MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd
-leaf01(swp1)    4      65101      26      27        0    0    0 00:01:09            0
-leaf02(swp2)    4      65102      15      16        0    0    0 00:00:38            0
+Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
+swp1            4          0         0         0        0    0    0    never         Idle        0 N/A
+swp2            4          0         0         0        0    0    0    never         Idle        0 N/A
 
 Total number of neighbors 2
-
-
-show bgp ipv6 unicast summary
-=============================
-% No BGP neighbors found
-
-show bgp l2vpn evpn summary
-===========================
-% No BGP neighbors found
 ```
 
 2. **On leaf01** : Verify BGP peering between leafs and spine
 ```
-cumulus@leaf01:mgmt:~$ net show bgp summary
+cumulus@leaf01:mgmt:~$ sudo vtysh
 
-show bgp ipv4 unicast summary
-=============================
+Hello, this is FRRouting (version 8.4.3).
+Copyright 1996-2005 Kunihiro Ishiguro, et al.
+
+leaf01# show ip bgp summary
+
+IPv4 Unicast Summary (VRF default):
 BGP router identifier 10.255.255.1, local AS number 65101 vrf-id 0
 BGP table version 0
 RIB entries 0, using 0 bytes of memory
 Peers 1, using 20 KiB of memory
 
-Neighbor        V         AS MsgRcvd MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd
-spine01(swp51)  4      65201      13      15        0    0    0 00:00:35            0
+Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
+swp1            4          0         0         0        0    0    0    never         Idle        0 N/A
 
 Total number of neighbors 1
-
-
-show bgp ipv6 unicast summary
-=============================
-% No BGP neighbors found
-
-show bgp l2vpn evpn summary
-===========================
-% No BGP neighbors found
 ```
 ```
-cumulus@leaf02:mgmt:~$ net show bgp sum
+cumulus@leaf02:mgmt:~$ sudo vtysh
 
-show bgp ipv4 unicast summary
-=============================
+Hello, this is FRRouting (version 8.4.3).
+Copyright 1996-2005 Kunihiro Ishiguro, et al.
+
+leaf02# show ip bgp summary
+
+IPv4 Unicast Summary (VRF default):
 BGP router identifier 10.255.255.2, local AS number 65102 vrf-id 0
 BGP table version 0
 RIB entries 0, using 0 bytes of memory
 Peers 1, using 20 KiB of memory
 
-Neighbor        V         AS MsgRcvd MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd
-spine01(swp51)  4      65201       4       6        0    0    0 00:00:07            0
+Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
+swp1            4          0         0         0        0    0    0    never         Idle        0 N/A
 
 Total number of neighbors 1
 ```
@@ -944,7 +1012,7 @@ Total number of neighbors 1
 - The BGP neighbor shows the hostname of the BGP peer
 - Only the peer is up, no routes are being advertised yet
 - The BGP router identifier uses the loopback address
-- Show commands can be a mix of "nv show" and legacy "net show". Here we are using "net show" commands.
+- Show commands can be a mix of "nv show" and "vtysh show". Here we are using "vtysh show" commands.
 
 ##
 ## Advertise Loopback and SVI subnets into the fabric
@@ -961,7 +1029,7 @@ _Routing Advertisement Configuration:_
 cumulus@spine01:mgmt:~$ nv set vrf default router bgp address-family ipv4-unicast network 10.255.255.101/32
 cumulus@spine01:mgmt:~$ nv config apply
 ```
-2. On leaf01 : Advertise loopback address into BGP.
+2. **On leaf01** : Advertise loopback address into BGP.
 ```
 cumulus@leaf01:mgmt:~$ nv set vrf default router bgp address-family ipv4-unicast network 10.255.255.1/32
 ```
@@ -991,30 +1059,26 @@ nv config apply
 
 1. **On spine01**: Check that routes are being learned.
 ```
-cumulus@spine01:mgmt:~$ net show bgp
+cumulus@spine01:mgmt:~$ sudo vtysh
 
-show bgp ipv4 unicast
-=====================
-BGP table version is 5, local router ID is 10.255.255.101
-Status codes: s suppressed, d damped, h history, * valid, > best, = multipath,
-              i internal, r RIB-failure, S Stale, R Removed
-Origin codes: i - IGP, e - EGP, ? - incomplete
+Hello, this is FRRouting (version 8.4.3).
+Copyright 1996-2005 Kunihiro Ishiguro, et al.
+
+spine01# show ip bgp ipv4 unicast
+BGP table version is 1, local router ID is 10.255.255.101, vrf id 0
+Default local pref 100, local AS 65201
+Status codes:  s suppressed, d damped, h history, u unsorted, * valid, > best, = multipath,
+               i internal, r RIB-failure, S Stale, R Removed
+Nexthop codes: @NNN nexthop's vrf id, < announce-nh-self
+Origin codes:  i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
 
    Network          Next Hop            Metric LocPrf Weight Path
-*> 10.0.10.0/24     swp1                     0             0 65101 i
-*> 10.0.20.0/24     swp2                     0             0 65102 i
-*> 10.255.255.1/32  swp1                     0             0 65101 i
-*> 10.255.255.2/32  swp2                     0             0 65102 i
 *> 10.255.255.101/32
-                    0.0.0.0                  0         32768 i
+                    0.0.0.0(cumulus)
+                                             0         32768 i
 
-Displayed  5 routes and 5 total paths
-
-
-show bgp ipv6 unicast
-=====================
-No BGP prefixes displayed, 0 exist
-cumulus@spine01:mgmt:~$ 
+Displayed  1 routes and 1 total paths
 ```
 
 **Important things to observe:**
@@ -1027,15 +1091,14 @@ cumulus@spine01:mgmt:~$
 
 1. **On Server01:** ping to Server02 (10.0.20.102)
 ```
-ubuntu@server01:~$ ping 10.0.20.102
+ubuntu@server01:~$ ping 10.0.20.102 -c 2
 PING 10.0.20.102 (10.0.20.102) 56(84) bytes of data.
-64 bytes from 10.0.20.102: icmp_seq=1 ttl=61 time=9.86 ms
-64 bytes from 10.0.20.102: icmp_seq=2 ttl=61 time=5.96 ms
-64 bytes from 10.0.20.102: icmp_seq=3 ttl=61 time=5.80 ms
-^C
+64 bytes from 10.0.20.102: icmp_seq=1 ttl=63 time=1.05 ms
+64 bytes from 10.0.20.102: icmp_seq=2 ttl=63 time=1.15 ms
+
 --- 10.0.20.102 ping statistics ---
-3 packets transmitted, 3 received, 0% packet loss, time 2003ms
-rtt min/avg/max/mdev = 5.806/7.211/9.864/1.877 ms
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 1.052/1.102/1.153/0.060 ms
 ```
 
 2. On Server01, traceroute to Server02 (10.0.20.102). Identify all of the hops.
@@ -1053,4 +1116,3 @@ ubuntu@server01:~$
 - With Unnumbered interfaces, traceroute (ICMP source interface) packets come from the loopback ipv4 address of the node.
 
 **This concludes the Cumulus Linux Test Drive.**
-
