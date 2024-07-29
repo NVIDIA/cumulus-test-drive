@@ -122,7 +122,6 @@ This lab will configure several types of interfaces. First, a bond will be confi
 - Refer to the step `Run the setup playbook` from Lab1 on the previous page
 
 **Goals:**
-- Configure switch hostnames on leaf01 and leaf02
 - Configure loopback addresses for leaf01 and leaf02
 - Configure a bond between leaf01 and leaf02
 - Configure a bridge
@@ -130,19 +129,6 @@ This lab will configure several types of interfaces. First, a bond will be confi
 - Configure SVIs on leaf01 and leaf02
 - Configure VRR addresses on leaf01 and leaf02
 ##
-
-## Configure switch hostnames on leaf01 and leaf02
-
-1. **On leaf01** : 
-```
-nv set system hostname leaf01  
-```
-
-2. **On leaf02** : 
-```
-nv set system hostname leaf02  
-```
-
 ## Configure loopback addresses on leaf01 and leaf02
 
 | Interface↓ / Switch→ | leaf01 | leaf02 |
@@ -875,7 +861,7 @@ This lab will configure BGP unnumbered between the leaf01/leaf02 to spine01. Thi
 **Dependencies on other Labs:**
 
 - None. 
-- An Ansible playbook, `lab3.yml` configures all prerequisites, run it using `ansible-playbook lab3.yml` command.
+- An Ansible playbook, `lab3.yml` configures all prerequisites.
 
 **Goals:**
 
@@ -901,8 +887,9 @@ ubuntu@oob-mgmt-server:~/Test-Drive-Automation$ ansible-playbook lab3.yml
 | --- | --- | --- | --- |
 | **Loopback IP address** | 10.255.255.1/32 | 10.255.255.2/32 | 10.255.255.101/32 |
 
-1. **On spine01**: Configure a loopback interface
+1. **On spine01**: Configure a loopback interface and hostname
 ```
+cumulus@spine01:mgmt:~$ nv set system hostname spine01
 cumulus@spine01:mgmt:~$ nv set interface lo ip address 10.255.255.101/32
 cumulus@spine01:mgmt:~$ nv config apply
 ```
@@ -930,7 +917,7 @@ cumulus@spine01:mgmt:~$ nv config apply
 cumulus@leaf01:mgmt:~$ nv set vrf default router bgp autonomous-system 65101
 cumulus@leaf01:mgmt:~$ nv set vrf default router bgp path-selection multipath aspath-ignore on 
 cumulus@leaf01:mgmt:~$ nv set router bgp router-id 10.255.255.1
-cumulus@leaf01:mgmt:~$ nv set vrf default router bgp neighbor swp1 remote-as external
+cumulus@leaf01:mgmt:~$ nv set vrf default router bgp neighbor swp51 remote-as external
 cumulus@leaf01:mgmt:~$ nv config apply 
 ```
 For copy/paste convenience:
@@ -938,7 +925,7 @@ For copy/paste convenience:
 nv set vrf default router bgp autonomous-system 65101
 nv set vrf default router bgp path-selection multipath aspath-ignore on
 nv set router bgp router-id 10.255.255.1
-nv set vrf default router bgp neighbor swp1 remote-as external
+nv set vrf default router bgp neighbor swp51 remote-as external
 nv config apply
 ```
 5. **On leaf02** : Repeat steps 1-3, but with small differences specific to this leaf
@@ -946,7 +933,7 @@ nv config apply
 cumulus@leaf02:mgmt:~$ nv set vrf default router bgp autonomous-system 65102
 cumulus@leaf02:mgmt:~$ nv set vrf default router bgp path-selection multipath aspath-ignore on
 cumulus@leaf02:mgmt:~$ nv set router bgp router-id 10.255.255.2
-cumulus@leaf02:mgmt:~$ nv set vrf default router bgp neighbor swp1 remote-as external 
+cumulus@leaf02:mgmt:~$ nv set vrf default router bgp neighbor swp51 remote-as external 
 cumulus@leaf02:mgmt:~$ nv config apply
 ```
 For copy/paste convenience:
@@ -954,7 +941,7 @@ For copy/paste convenience:
 nv set vrf default router bgp autonomous-system 65102
 nv set vrf default router bgp path-selection multipath aspath-ignore on
 nv set router bgp router-id 10.255.255.2
-nv set vrf default router bgp neighbor swp1 remote-as external 
+nv set vrf default router bgp neighbor swp51 remote-as external 
 nv config apply
 ```
 ##
@@ -962,62 +949,47 @@ nv config apply
 
 1. **On spine01:** Verify BGP peering between spine and leafs.
 ```
-cumulus@spine01:mgmt:~$ sudo vtysh
-
-Hello, this is FRRouting (version 8.4.3).
-Copyright 1996-2005 Kunihiro Ishiguro, et al.
-
-spine01# show ip bgp summary
+cumulus@spine01:mgmt:~$ sudo vtysh -c " show ip bgp summary"
 
 IPv4 Unicast Summary (VRF default):
 BGP router identifier 10.255.255.101, local AS number 65201 vrf-id 0
-BGP table version 0
-RIB entries 0, using 0 bytes of memory
+BGP table version 5
+RIB entries 9, using 1728 bytes of memory
 Peers 2, using 40 KiB of memory
 
 Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
-swp1            4          0         0         0        0    0    0    never         Idle        0 N/A
-swp2            4          0         0         0        0    0    0    never         Idle        0 N/A
+leaf01(swp1)    4      65101        83        83        0    0    0 00:03:51            2        5 N/A
+leaf02(swp2)    4      65102        78        78        0    0    0 00:03:38            2        5 N/A
 
 Total number of neighbors 2
 ```
 
 2. **On leaf01** : Verify BGP peering between leafs and spine
 ```
-cumulus@leaf01:mgmt:~$ sudo vtysh
-
-Hello, this is FRRouting (version 8.4.3).
-Copyright 1996-2005 Kunihiro Ishiguro, et al.
-
-leaf01# show ip bgp summary
+cumulus@leaf01:mgmt:~$ sudo vtysh -c " show ip bgp summary"
 
 IPv4 Unicast Summary (VRF default):
 BGP router identifier 10.255.255.1, local AS number 65101 vrf-id 0
-BGP table version 0
-RIB entries 0, using 0 bytes of memory
+BGP table version 5
+RIB entries 9, using 1728 bytes of memory
 Peers 1, using 20 KiB of memory
 
 Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
-swp1            4          0         0         0        0    0    0    never         Idle        0 N/A
+spine01(swp51)  4      65201        92        93        0    0    0 00:04:18            3        5 N/A
 
 Total number of neighbors 1
 ```
 ```
-cumulus@leaf02:mgmt:~$ sudo vtysh
-
-Hello, this is FRRouting (version 8.4.3).
-Copyright 1996-2005 Kunihiro Ishiguro, et al.
-
-leaf02# show ip bgp summary
+cumulus@leaf02:mgmt:~$ sudo vtysh -c " show ip bgp summary"
 
 IPv4 Unicast Summary (VRF default):
 BGP router identifier 10.255.255.2, local AS number 65102 vrf-id 0
-BGP table version 0
-RIB entries 0, using 0 bytes of memory
+BGP table version 5
+RIB entries 9, using 1728 bytes of memory
 Peers 1, using 20 KiB of memory
 
 Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
-swp1            4          0         0         0        0    0    0    never         Idle        0 N/A
+cumulus(swp51)  4      65201        96        97        0    0    0 00:04:31            3        5 N/A
 
 Total number of neighbors 1
 ```
@@ -1073,13 +1045,8 @@ nv config apply
 
 1. **On spine01**: Check that routes are being learned.
 ```
-cumulus@spine01:mgmt:~$ sudo vtysh
-
-Hello, this is FRRouting (version 8.4.3).
-Copyright 1996-2005 Kunihiro Ishiguro, et al.
-
-spine01# show ip bgp ipv4 unicast
-BGP table version is 1, local router ID is 10.255.255.101, vrf id 0
+cumulus@spine01:mgmt:~$ sudo vtysh -c "show ip bgp ipv4 unicast"
+BGP table version is 5, local router ID is 10.255.255.101, vrf id 0
 Default local pref 100, local AS 65201
 Status codes:  s suppressed, d damped, h history, u unsorted, * valid, > best, = multipath,
                i internal, r RIB-failure, S Stale, R Removed
@@ -1088,11 +1055,15 @@ Origin codes:  i - IGP, e - EGP, ? - incomplete
 RPKI validation codes: V valid, I invalid, N Not found
 
    Network          Next Hop            Metric LocPrf Weight Path
+*> 10.0.10.0/24     swp1                     0             0 65101 i
+*> 10.0.20.0/24     swp2                     0             0 65102 i
+*> 10.255.255.1/32  swp1                     0             0 65101 i
+*> 10.255.255.2/32  swp2                     0             0 65102 i
 *> 10.255.255.101/32
-                    0.0.0.0(cumulus)
+                    0.0.0.0(spine01)
                                              0         32768 i
 
-Displayed  1 routes and 1 total paths
+Displayed  5 routes and 5 total paths
 ```
 
 **Important things to observe:**
@@ -1119,10 +1090,10 @@ rtt min/avg/max/mdev = 1.052/1.102/1.153/0.060 ms
 ```
 ubuntu@server01:~$ traceroute 10.0.20.102
 traceroute to 10.0.20.102 (10.0.20.102), 30 hops max, 60 byte packets
- 1  10.0.10.1 (10.0.10.1)  1.280 ms  1.389 ms  1.553 ms
- 2  10.255.255.101 (10.255.255.101)  4.702 ms  4.679 ms  4.789 ms
- 3  10.255.255.2 (10.255.255.2)  8.438 ms  8.877 ms  9.476 ms
- 4  10.0.20.102 (10.0.20.102)  9.541 ms  9.766 ms  13.549 ms
+ 1  10.0.10.1 (10.0.10.1)  0.357 ms  0.289 ms  0.257 ms
+ 2  10.255.255.101 (10.255.255.101)  0.899 ms  0.878 ms  0.855 ms
+ 3  10.255.255.2 (10.255.255.2)  0.737 ms  0.708 ms  0.686 ms
+ 4  10.0.20.102 (10.0.20.102)  1.401 ms  1.342 ms  1.320 ms
 ubuntu@server01:~$ 
 ```
 
