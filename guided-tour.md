@@ -32,11 +32,16 @@ In Lab 1, we'll access the oob-mgmt-server .  The first part of this lab include
 ubuntu@oob-mgmt-server:~$ cd Test-Drive-Automation
 ubuntu@oob-mgmt-server:~/Test-Drive-Automation$
 ```
-2. Perform a `git pull` to sync/fetch changes
+2. Switch to `CL_demo_5.6` branch and perform a `git pull` to sync/fetch changes
 ```
-ubuntu@oob-mgmt-server:~/Test-Drive-Automation$ git pull 
+cumulus@oob-mgmt-server:~/Test-Drive-Automation$ git checkout CL_demo_5.6
+Switched to branch 'CL_demo_5.6'
+Your branch is ahead of 'origin/CL_demo_5.6' by 1 commit.
+  (use "git push" to publish your local commits)
+cumulus@oob-mgmt-server:~/github_public/cumulus-test-drive$
+cumulus@oob-mgmt-server:~/Test-Drive-Automation$ git pull 
 Already up-to-date
-ubuntu@oob-mgmt-server:~/Test-Drive-Automation$
+cumulus@oob-mgmt-server:~/Test-Drive-Automation$ 
 ```
 3. Run the `start-lab.yml` Ansible playbook.
 ```
