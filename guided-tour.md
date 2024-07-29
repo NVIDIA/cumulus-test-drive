@@ -122,6 +122,7 @@ This lab will configure several types of interfaces. First, a bond will be confi
 - Refer to the step `Run the setup playbook` from Lab1 on the previous page
 
 **Goals:**
+- Configure switch hostnames on leaf01 and leaf02
 - Configure loopback addresses for leaf01 and leaf02
 - Configure a bond between leaf01 and leaf02
 - Configure a bridge
@@ -129,6 +130,19 @@ This lab will configure several types of interfaces. First, a bond will be confi
 - Configure SVIs on leaf01 and leaf02
 - Configure VRR addresses on leaf01 and leaf02
 ##
+
+## Configure switch hostnames on leaf01 and leaf02
+
+1. **On leaf01** : 
+```
+nv set system hostname leaf01  
+```
+
+2. **On leaf02** : 
+```
+nv set system hostname leaf02  
+```
+
 ## Configure loopback addresses on leaf01 and leaf02
 
 | Interface↓ / Switch→ | leaf01 | leaf02 |
@@ -861,7 +875,7 @@ This lab will configure BGP unnumbered between the leaf01/leaf02 to spine01. Thi
 **Dependencies on other Labs:**
 
 - None. 
-- An Ansible playbook, `lab3.yml` configures all prerequisites.
+- An Ansible playbook, `lab3.yml` configures all prerequisites, run it using `ansible-playbook lab3.yml` command.
 
 **Goals:**
 
