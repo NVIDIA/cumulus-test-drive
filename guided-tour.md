@@ -1051,9 +1051,9 @@ Displayed  5 routes and 5 total paths
 ```
 
 **Important things to observe:**
-- AS PATH identifies where routes are originating.
-- NEXT HOP is the interface and not an IP address because of BGP unnumbered.
-- Where next hops is equal to 0.0.0.0, that route is originated locally.
+- AS_PATH identifies where routes are originating.
+- NEXT_HOP is the interface and not an IP address because of BGP unnumbered.
+- Where NEXT_HOP is equal to 0.0.0.0, that route is originated locally.
 
 ##
 ## Verify connectivity and path between server01 and server02
