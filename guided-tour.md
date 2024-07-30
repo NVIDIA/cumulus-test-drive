@@ -20,7 +20,7 @@ The `oob-mgmt-server` password needs to be updated on first-login.
 
 **Objective:**
 
-In Lab 1, we'll access the oob-mgmt-server .  The first part of this lab includes how to access Cumulus In the Cloud and your lab workbench.
+In Lab 1, we'll access the `oob-mgmt-server`. The first part of this lab includes how to access NVIDIA Air and your lab workbench.
 
 **Goals:**
 
@@ -32,7 +32,7 @@ In Lab 1, we'll access the oob-mgmt-server .  The first part of this lab include
 
 1. In the window below labeled `Nodes` click on the `oob-mgmt-server` device. This will pop open a new browser window that provides console access to the device.  
 
-2. Log into the oob-mgmt-server with the username `ubuntu` and password `nvidia`
+2. Log into the oob-mgmt-server with the username `ubuntu` and password `nvidia`.
 
 3. Then, follow the instructions to set a new password.
 
@@ -44,7 +44,7 @@ In Lab 1, we'll access the oob-mgmt-server .  The first part of this lab include
 ubuntu@oob-mgmt-server:~$ cd Test-Drive-Automation
 ubuntu@oob-mgmt-server:~/Test-Drive-Automation$
 ```
-2. Switch to `main` branch (if not already) and perform a `git pull` to sync/fetch changes
+2. Switch to `main` branch (if not already) and perform a `git pull` to sync/fetch changes.
 ```
 cumulus@oob-mgmt-server:~/Test-Drive-Automation$ git checkout main
 Switched to branch 'main'
@@ -58,50 +58,35 @@ cumulus@oob-mgmt-server:~/Test-Drive-Automation$
 3. Run the `start-lab.yml` Ansible playbook.
 ```
 ubuntu@oob-mgmt-server:~/Test-Drive-Automation$ ansible-playbook start-lab.yml
- [WARNING]: Invalid characters were found in group names but not replaced, useml
+[WARNING]: Invalid characters were found in group names but not replaced, use
 -vvvv to see details
 
-PLAY [localhost] ***************************************************************
-
-TASK [place license on webserver] **********************************************
-Thursday 11 February 2021  18:12:41 +0000 (0:00:00.061)       0:00:00.061 *****
-changed: [localhost]
-
-PLAY [server01:server02] *******************************************************
+PLAY [host] ********************************************************************
 
 TASK [Setting up the test hosts config] ****************************************
-Thursday 11 February 2021  18:12:42 +0000 (0:00:00.781)       0:00:00.842 *****
-changed: [server01]
-changed: [server02]
+Monday 29 July 2024  12:00:42 +0000 (0:00:00.026)       0:00:00.026 ***********
+ok: [server01]
+ok: [server02]
 
 TASK [install traceroute] ******************************************************
-Thursday 11 February 2021  18:12:45 +0000 (0:00:03.115)       0:00:03.957 *****
-[WARNING]: Updating cache and auto-installing missing dependency: python-apt
-changed: [server01]
-changed: [server02]
+Monday 29 July 2024  12:00:44 +0000 (0:00:01.480)       0:00:01.506 ***********
+ok: [server01]
+ok: [server02]
 
-TASK [remove netq] *************************************************************
-Thursday 11 February 2021  18:12:58 +0000 (0:00:12.826)       0:00:16.783 *****
-changed: [server02]
+TASK [flush arp] ***************************************************************
+Monday 29 July 2024  12:00:46 +0000 (0:00:01.879)       0:00:03.386 ***********
 changed: [server01]
-
-RUNNING HANDLER [apply interface config] ***************************************
-Thursday 11 February 2021  18:13:08 +0000 (0:00:10.080)       0:00:26.863 *****
 changed: [server02]
-changed: [server01]
 
 PLAY RECAP *********************************************************************
-localhost                  : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
-server01                   : ok=4    changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
-server02                   : ok=4    changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+server01                   : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+server02                   : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 
-Thursday 11 February 2021  18:13:10 +0000 (0:00:02.161)       0:00:29.025 *****
+Monday 29 July 2024  12:00:47 +0000 (0:00:01.077)       0:00:04.464 ***********
 ===============================================================================
-install traceroute ----------------------------------------------------- 12.83s
-remove netq ------------------------------------------------------------ 10.08s
-Setting up the test hosts config ---------------------------------------- 3.12s
-apply interface config -------------------------------------------------- 2.16s
-place license on webserver ---------------------------------------------- 0.78s
+install traceroute ------------------------------------------------------ 1.88s
+Setting up the test hosts config ---------------------------------------- 1.48s
+flush arp --------------------------------------------------------------- 1.08s
 ubuntu@oob-mgmt-server:~/Test-Drive-Automation$
 ```
 
@@ -114,12 +99,12 @@ ubuntu@oob-mgmt-server:~/Test-Drive-Automation$
 # Lab 2: Interface Configuration
 **Objective:**
 
-This lab will configure several types of interfaces. First, a bond will be configured between leaf01 and leaf02. The bond will be configured as a trunk to pass vlan10 and vlan20. Connections between leafs and servers will be configured as access ports. Server01 and Server02 will be in different subnets, so leaf01 and leaf02 will be configured to route for each vlan using VRR to provide high availability gateways for each vlan.
+This lab will configure several types of interfaces. First, a bond will be configured between `leaf01` and `leaf02`. The bond will be configured as a trunk to pass `vlan10` and `vlan20`. Connections between leafs and servers will be configured as access ports. `Server01` and `Server02` will be in different subnets, so `leaf01` and `leaf02` will be configured to route for each vlan using VRR to provide high availability gateways for each vlan.
 
 **Dependencies on other Labs:**
 
-- Ensure you run the Ansible playbook in Lab1. 
-- Refer to the step `Run the setup playbook` from Lab1 on the previous page
+- Ensure you run the Ansible playbook in Lab 1. 
+- Refer to the step `Run the setup playbook` from Lab 1 on the previous page.
 
 **Goals:**
 - Configure loopback addresses for leaf01 and leaf02
@@ -249,7 +234,7 @@ ifindex                  1
 ```
 
 **Important things to observe:**
-- Loopback has user-defined IP address as well as home address assigned to it
+- Loopback has user-defined IP address as well as home address assigned to it.
 - Loopback has a predefined default configuration on Cumulus Linux. Make sure not to delete it.
 
 ##
@@ -259,16 +244,16 @@ ifindex                  1
 | Bond↓ / Switch→ | leaf01 |  leaf02 |
 | --- | --- | --- |
 | Bond name | BOND0 | BOND0 | 
-| Bond members | swp49,swp50 | swp49,swp50 |
+| Bond members | swp49,swp50 | swp49, swp50 |
 
 
-1. **On leaf01** : Create a bond with members swp49 and swp50.
+1. **On leaf01** : Create a bond with members `swp49` and `swp50`.
 ```
 cumulus@leaf01:mgmt:~$ nv set interface bond0 bond member swp49-50
 cumulus@leaf01:mgmt:~$ nv config apply
 ```
 
-2. **On leaf02**: Create a bond with members swp49 and swp50.
+2. **On leaf02**: Create a bond with members `swp49` and `swp50`.
 ```
 cumulus@leaf02:mgmt:~$ nv set interface bond0 bond member swp49-50
 cumulus@leaf02:mgmt:~$ nv config apply
@@ -495,8 +480,8 @@ swp50  active         up
 ```
 
  **Important things to observe:**
-- The speed of the bond is the cumulative speed of all member interfaces
-- Bond member interface status and bond interface status are displayed in output
+- The speed of the bond is the cumulative speed of all member interfaces.
+- Bond member interface status and bond interface status are displayed in output.
 
 
 ##
@@ -505,8 +490,8 @@ _Bridge Configuration Details:_
 
 | Bridge↓ / Switch→ | leaf01 |  leaf02 |
 | --- | --- | --- |
-| **Bridge vlans**  | 10,20 | 10,20 | 
-| **Bridge members** | BOND0,swp1 | BOND0,swp2 |
+| **Bridge vlans**  | 10, 20 | 10, 20 | 
+| **Bridge members** | BOND0, swp1 | BOND0, swp2 |
 | **Bridge access port** |  swp1 | swp2 |
 | **Bridge access vlan** |  10 | 20 |
 
@@ -515,13 +500,13 @@ _Bridge Configuration Details:_
  cumulus@leaf01:mgmt:~$ nv set bridge domain br_default vlan 10,20
 ```
 
-2. On leaf01: Add swp1 and BOND0 as a member to the bridge. 
+2. On leaf01: Add `swp1` and `BOND0` as a member to the bridge. 
  _Note: The name BOND0 is case sensitive in all places._
 ```
 cumulus@leaf01:mgmt:~$ nv set interface swp1,bond0 bridge domain br_default
 ```
 
-3. On leaf01 : Configure swp1 as an access port for vlan 10.
+3. On leaf01 : Configure `swp1` as an access port for `vlan 10`.
 ```
 cumulus@leaf01:mgmt:~$ nv set interface swp1 bridge domain br_default access 10
 ```
@@ -531,7 +516,7 @@ cumulus@leaf01:mgmt:~$ nv set interface swp1 bridge domain br_default access 10
 cumulus@leaf01:mgmt:~$ nv config apply
 ```
 
-5. **On leaf02** : Repeat the same steps but use swp2 as the access port towards the server.
+5. **On leaf02** : Repeat the same steps but use `swp2` as the access port towards the server.
 ```
 cumulus@leaf02:mgmt:~$ nv set bridge domain br_default vlan 10,20
 cumulus@leaf02:mgmt:~$ nv set interface swp2,bond0 bridge domain br_default
@@ -549,7 +534,7 @@ nv config apply
 ##
 ## Verify bridge configuration on leaf01 and leaf02
 
-1. **On leaf01** : Verify the configuration on leaf01 by checking that swp1 and BOND0 are part of the bridge.
+1. **On leaf01** : Verify the configuration on `leaf01` by checking that `swp1` and `BOND0` are part of the bridge.
 ```
 cumulus@leaf01$ nv show bridge domain br_default
 Bridge info:
@@ -571,7 +556,7 @@ Port           State
 bond0          forwarding
 swp1           forwarding
 ```
-2. **On leaf02** : Verify the same configuration on leaf02 by checking that swp2 and BOND0 are part of the bridge.
+2. **On leaf02** : Verify the same configuration on `leaf02` by checking that `swp2` and `BOND0` are part of the bridge.
 ```
 cumulus@leaf02$ nv show bridge domain br_default
 Bridge info:
@@ -609,24 +594,24 @@ _VRR Configuration details:_
 | **Server01 VLAN** | 10 | 10 |
 | **Server01 VLAN** | 20 | 20 |
 
-1. **On leaf01** : Create an SVI for vlan10.
+1. **On leaf01** : Create an SVI for `vlan10`.
 ```
 cumulus@leaf01:mgmt:~$ nv set interface vlan10 ip address 10.0.10.2/24
 ```
 
-2. On leaf01 : Create an SVI for vlan 20.
+2. On leaf01 : Create an SVI for `vlan20`.
 ```
 cumulus@leaf01:mgmt:~$ nv set interface vlan20 ip address 10.0.20.2/24
 ```
 
-3. On leaf01 : Apply a VRR address and MAC for vlan10.
+3. On leaf01 : Apply a VRR address and MAC for `vlan10`.
 ```
 cumulus@leaf01:mgmt:~$ nv set interface vlan10 ip vrr address 10.0.10.1/24
 cumulus@leaf01:mgmt:~$ nv set interface vlan10 ip vrr mac-address 00:00:00:00:1a:10
 cumulus@leaf01:mgmt:~$ nv set interface vlan10 ip vrr state up
 ```
 
-4. On leaf01 : Apply a VRR address and MAC for vlan20.
+4. On leaf01 : Apply a VRR address and MAC for `vlan20`.
 ```
 cumulus@leaf01:mgmt:~$ nv set interface vlan20 ip vrr address 10.0.20.1/24
 cumulus@leaf01:mgmt:~$ nv set interface vlan20 ip vrr mac-address 00:00:00:00:1a:20
@@ -638,7 +623,7 @@ cumulus@leaf01:mgmt:~$ nv set interface vlan20 ip vrr state up
 cumulus@leaf01:mgmt:~$ nv config apply
 ```
 
-6. **On leaf02** : Repeat steps 1-6.
+6. **On leaf02** : Repeat steps 1-5.
 ```
 cumulus@leaf02:mgmt:~$ nv set interface vlan10 ip address 10.0.10.3/24
 cumulus@leaf02:mgmt:~$ nv set interface vlan20 ip address 10.0.20.3/24
@@ -667,7 +652,7 @@ nv config apply
 ##
 ## Test VRR connectivity
 
-1. **On server01:** Test connectivity from server01 to the VRR gateway address. The login and password on servers is `ubuntu` / `nvidia`
+1. **On server01:** Test connectivity from `server01` to the VRR gateway address. The login and password on servers is `ubuntu` / `nvidia`
 ```
 ubuntu@server01:~$ ping 10.0.10.1 -c 2
 PING 10.0.10.1 (10.0.10.1) 56(84) bytes of data.
@@ -679,7 +664,7 @@ PING 10.0.10.1 (10.0.10.1) 56(84) bytes of data.
 rtt min/avg/max/mdev = 0.686/0.804/0.922/0.118 ms
 ```
 
-2. On server01: Test connectivity from server01 to leaf01 real IP address.
+2. On server01: Test connectivity from `server01` to `leaf01` real IP address.
 ```
 ubuntu@server01:~$ ping 10.0.10.2 -c 2
 PING 10.0.10.2 (10.0.10.2) 56(84) bytes of data.
@@ -691,7 +676,7 @@ PING 10.0.10.2 (10.0.10.2) 56(84) bytes of data.
 rtt min/avg/max/mdev = 0.835/0.861/0.887/0.026 ms
 ```
 
-3. On server01: Test connectivity from server01 to leaf02 real IP address.
+3. On server01: Test connectivity from `server01` to `leaf02` real IP address.
 ```
 ubuntu@server01:~$ ping 10.0.10.3 -c 2
 PING 10.0.10.3 (10.0.10.3) 56(84) bytes of data.
@@ -703,7 +688,7 @@ PING 10.0.10.3 (10.0.10.3) 56(84) bytes of data.
 rtt min/avg/max/mdev = 0.528/0.702/0.876/0.174 ms
 ```
 
-4. **On server01:** Check the IP neighbor table which is similar to the ARP table, to view each MAC address. The arp table could also be evaluated using the `arp -a` command.
+4. On server01: Check the IP neighbor table which is similar to the ARP table, to view each MAC address. The arp table could also be evaluated using the `arp -a` command.
 ```
 ubuntu@server01:~$ ip neighbor show
 192.168.200.1 dev eth0 lladdr 44:38:39:00:00:11 REACHABLE
@@ -715,7 +700,7 @@ fe80::4638:39ff:fe00:12 dev eth0 lladdr 44:38:39:00:00:12 router STALE
 fe80::4638:39ff:fe00:b dev eth1 lladdr 44:38:39:00:00:0b router REACHABLE
 ```
 
-5. **On server02**: Repeat the same connectivity tests in step 10-13 from server02 to switch IP addresses.
+5. **On server02**: Repeat the same connectivity tests in step 1-4 from `server02` to switch IP addresses.
 ```
 ubuntu@server02:~$ ping 10.0.20.1 -c 2
 PING 10.0.20.1 (10.0.20.1) 56(84) bytes of data.
@@ -799,7 +784,7 @@ ubuntu@server02:~$
 
 1. **On leaf01 and leaf02:** Check to verify that the MAC addresses are learned correctly.
 ```
-cumulus@leaf01:mgmt:~$ nv  show bridge domain br_default mac-table
+cumulus@leaf01:mgmt:~$ nv show bridge domain br_default mac-table
 entry-id  MAC address        vlan  interface   remote-dst  src-vni  entry-type  last-update  age
 --------  -----------------  ----  ----------  ----------  -------  ----------  -----------  -------
 1         48:b0:2d:db:95:44  10    swp1                                         0:00:00      0:01:43
@@ -856,11 +841,10 @@ entry-id  MAC address        vlan  interface   remote-dst  src-vni  entry-type  
 
 **Objective:**
 
-This lab will configure BGP unnumbered between the leaf01/leaf02 to spine01. This configuration will share the ip addresses of the loopback interfaces on each device as well as the vlan10 and vlan20 subnets on the leaf01 and leaf02 devices.
+This lab will configure BGP unnumbered between the `leaf01/leaf02` to `spine01`. This configuration will share the ip addresses of the loopback interfaces on each device as well as the `vlan10` and `vlan20` subnets on the `leaf01` and `leaf02` devices.
 
 **Dependencies on other Labs:**
 
-- None. 
 - An Ansible playbook, `lab3.yml` configures all prerequisites.
 
 **Goals:**
@@ -887,13 +871,13 @@ ubuntu@oob-mgmt-server:~/Test-Drive-Automation$ ansible-playbook lab3.yml
 | --- | --- | --- | --- |
 | **Loopback IP address** | 10.255.255.1/32 | 10.255.255.2/32 | 10.255.255.101/32 |
 
-1. **On spine01**: Configure a loopback interface and hostname
+1. **On spine01**: Configure a loopback interface and hostname.
 ```
-cumulus@spine01:mgmt:~$ nv set system hostname spine01
 cumulus@spine01:mgmt:~$ nv set interface lo ip address 10.255.255.101/32
+cumulus@spine01:mgmt:~$ nv set system hostname spine01
 cumulus@spine01:mgmt:~$ nv config apply
 ```
-**Note:** Leaf01 and Leaf02 loopback addresses are already configured.
+**Note:** `leaf01` and `leaf02` loopback addresses are already configured.
 ##
 ## Configure BGP unnumbered on spine01, leaf01 and leaf02
 
@@ -903,7 +887,7 @@ cumulus@spine01:mgmt:~$ nv set vrf default router bgp autonomous-system 65201
 cumulus@spine01:mgmt:~$ nv set vrf default router bgp path-selection multipath aspath-ignore on
 cumulus@spine01:mgmt:~$ nv set router bgp router-id 10.255.255.101
 ```
-2. On spine01: Configure BGP peering on swp1 towards leaf01 and swp2 towards leaf02.
+2. On spine01: Configure BGP peering on `swp1` towards `leaf01` and `swp2` towards `leaf02`.
 ```
 cumulus@spine01:mgmt:~$ nv set vrf default router bgp neighbor swp1 remote-as external
 cumulus@spine01:mgmt:~$ nv set vrf default router bgp neighbor swp2 remote-as external 
@@ -912,7 +896,7 @@ cumulus@spine01:mgmt:~$ nv set vrf default router bgp neighbor swp2 remote-as ex
 ```
 cumulus@spine01:mgmt:~$ nv config apply 
 ```
-4. **On leaf01** : Repeat steps 1-3, but with small differences specific to this leaf
+4. **On leaf01** : Repeat steps 1-3, but with small differences specific to this leaf.
 ```
 cumulus@leaf01:mgmt:~$ nv set vrf default router bgp autonomous-system 65101
 cumulus@leaf01:mgmt:~$ nv set vrf default router bgp path-selection multipath aspath-ignore on 
@@ -928,7 +912,7 @@ nv set router bgp router-id 10.255.255.1
 nv set vrf default router bgp neighbor swp51 remote-as external
 nv config apply
 ```
-5. **On leaf02** : Repeat steps 1-3, but with small differences specific to this leaf
+5. **On leaf02** : Repeat steps 1-3, but with small differences specific to this leaf.
 ```
 cumulus@leaf02:mgmt:~$ nv set vrf default router bgp autonomous-system 65102
 cumulus@leaf02:mgmt:~$ nv set vrf default router bgp path-selection multipath aspath-ignore on
@@ -964,7 +948,7 @@ leaf02(swp2)    4      65102        78        78        0    0    0 00:03:38    
 Total number of neighbors 2
 ```
 
-2. **On leaf01** : Verify BGP peering between leafs and spine
+2. **On leaf01** : Verify BGP peering between leafs and spine.
 ```
 cumulus@leaf01:mgmt:~$ sudo vtysh -c " show ip bgp summary"
 
@@ -995,9 +979,9 @@ Total number of neighbors 1
 ```
 
  **Important things to observe:**
-- The BGP neighbor shows the hostname of the BGP peer
-- Only the peer is up, no routes are being advertised yet
-- The BGP router identifier uses the loopback address
+- The BGP neighbor shows the hostname of the BGP peer.
+- Only the peer is up, no routes are being advertised yet.
+- The BGP router identifier uses the loopback address.
 - Show commands can be a mix of "nv show" and "vtysh show". Here we are using "vtysh show" commands.
 
 ##
@@ -1019,7 +1003,7 @@ cumulus@spine01:mgmt:~$ nv config apply
 ```
 cumulus@leaf01:mgmt:~$ nv set vrf default router bgp address-family ipv4-unicast network 10.255.255.1/32
 ```
-3. On leaf01 : Advertise subnet for VLAN10.
+3. On leaf01 : Advertise subnet for `vlan10`.
 ```
 cumulus@leaf01:mgmt:~$ nv set vrf default router bgp address-family ipv4-unicast network 10.0.10.0/24
 ```
@@ -1067,8 +1051,8 @@ Displayed  5 routes and 5 total paths
 ```
 
 **Important things to observe:**
-- AS PATH identifies where routes are originating
-- NEXT HOP is the interface and not an IP address because of BGP unnumbered
+- AS PATH identifies where routes are originating.
+- NEXT HOP is the interface and not an IP address because of BGP unnumbered.
 - Where next hops is equal to 0.0.0.0, that route is originated locally.
 
 ##
