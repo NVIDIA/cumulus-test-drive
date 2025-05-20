@@ -6,7 +6,7 @@ This lab runs **Cumulus Linux 5.13**.
 # Topology
 The lab runs the following topology: 
 
-![air_simulation-1](https://gitlab.com/cumulus-consulting/goldenturtle/cumulus_ansible_modules/-/raw/evpn_demo_nvue_5.x/testdrive_topology.png?ref_type=heads&inline=false)    
+![air_simulation-1](https://gitlab.com/cumulus-consulting/goldenturtle/cumulus_ansible_modules/-/raw/evpn_demo_nvue_5.x/testdrive_topology.png?ref_type=heads)    
 
 # Login Credentials
 
