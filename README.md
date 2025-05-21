@@ -24,7 +24,7 @@ The lab guide is available upon request and is provided to the attendees of the 
 
 
 # Topology Diagram
-<img src="testdrive_topology.svg" width="800px">
+![air_simulation-1](https://gitlab.com/cumulus-consulting/goldenturtle/cumulus_ansible_modules/-/raw/evpn_demo_nvue_5.x/testdrive_topology.png?ref_type=heads)    
 
 # virt-workshop-testing
 
