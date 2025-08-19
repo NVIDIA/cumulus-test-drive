@@ -21,7 +21,7 @@
             up: {}
       swp1-3,51:
         type: swp
-      swp2-3:
+      swp3:
         bridge:
           domain:
             br_default:
