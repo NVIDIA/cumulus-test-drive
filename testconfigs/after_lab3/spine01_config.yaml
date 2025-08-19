@@ -1,4 +1,24 @@
 - set:
+    interface:
+      lo:
+        ip:
+          address:
+            10.255.255.101/32: {}
+        type: loopback
+      swp1-2:
+        link:
+          state:
+            up: {}
+        type: swp
+      swp1.100:
+        base-interface: swp1
+      swp1.100,swp2.100:
+        ip:
+          vrf: RED
+        type: sub
+        vlan: 100
+      swp2.100:
+        base-interface: swp2
     router:
       bgp:
         enable: on
@@ -39,6 +59,22 @@
             role: system-admin
       hostname: spine01
     vrf:
+      RED:
+        router:
+          bgp:
+            autonomous-system: 65201
+            enable: on
+            neighbor:
+              swp1.100:
+                remote-as: external
+                type: unnumbered
+              swp2.100:
+                remote-as: external
+                type: unnumbered
+            path-selection:
+              multipath:
+                aspath-ignore: on
+        table: auto
       default:
         router:
           bgp:
@@ -59,15 +95,3 @@
             path-selection:
               multipath:
                 aspath-ignore: on
-    interface:
-      lo:
-        ip:
-          address:
-            10.255.255.101/32: {}
-        type: loopback
-      swp1-2:
-        link:
-          state:
-            up: {}
-        type: swp
-

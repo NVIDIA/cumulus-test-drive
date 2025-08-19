@@ -3,7 +3,60 @@
       domain:
         br_default:
           vlan:
-            '10': {}
+            10,100: {}
+    interface:
+      lo:
+        ip:
+          address:
+            10.255.255.1/32: {}
+        type: loopback
+      swp1:
+        bridge:
+          domain:
+            br_default:
+              access: 10
+      swp1-2,51:
+        link:
+          state:
+            up: {}
+      swp1-3,51:
+        type: swp
+      swp2-3:
+        bridge:
+          domain:
+            br_default:
+              access: 100
+      swp51.100:
+        base-interface: swp51
+        type: sub
+      swp51.100,vlan100:
+        ip:
+          vrf: RED
+        vlan: 100
+      vlan10:
+        ip:
+          address:
+            10.0.10.2/24: {}
+          vrr:
+            address:
+              10.0.10.1/24: {}
+            mac-address: 00:00:00:00:1a:10
+        vlan: 10
+      vlan10,100:
+        ip:
+          vrr:
+            enable: on
+            state:
+              up: {}
+        type: svi
+      vlan100:
+        ip:
+          address:
+            10.100.10.2/24: {}
+          vrr:
+            address:
+              10.100.10.1/24: {}
+            mac-address: 00:00:00:00:2a:10
     router:
       bgp:
         enable: on
@@ -45,6 +98,24 @@
             role: system-admin
       hostname: leaf01
     vrf:
+      RED:
+        router:
+          bgp:
+            address-family:
+              ipv4-unicast:
+                enable: on
+                network:
+                  10.100.10.0/24: {}
+            autonomous-system: 65101
+            enable: on
+            neighbor:
+              swp51.100:
+                remote-as: external
+                type: unnumbered
+            path-selection:
+              multipath:
+                aspath-ignore: on
+        table: auto
       default:
         router:
           bgp:
@@ -63,35 +134,3 @@
             path-selection:
               multipath:
                 aspath-ignore: on
-            router-id: 10.255.255.1
-    interface:
-      lo:
-        ip:
-          address:
-            10.255.255.1/32: {}
-        type: loopback
-      swp1:
-        bridge:
-          domain:
-            br_default:
-              access: 10
-      swp1,51:
-        type: swp
-      swp51:
-        link:
-          state:
-            up: {}
-      vlan10:
-        ip:
-          address:
-            10.0.10.2/24: {}
-          vrr:
-            address:
-              10.0.10.1/24: {}
-            enable: on
-            mac-address: 00:00:00:00:1a:10
-            state:
-              up: {}
-        type: svi
-        vlan: 10
-
