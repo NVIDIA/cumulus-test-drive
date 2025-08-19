@@ -10,7 +10,7 @@ network:
   ethernets:
     eth0:
       dhcp4: true
-    eth1:
+    eth2:
       addresses:
         - 10.100.20.102/24
       routes:
