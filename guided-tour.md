@@ -1,12 +1,12 @@
 # Cumulus Linux Test Drive: Lab Guide
 This document will guide you through some basic Cumulus Linux configuration on the NVIDIA Air platform. You will connect to your Cumulus lab, configure interfaces, and enable BGP. 
 
-This lab runs **Cumulus Linux 5.13**.
+This lab runs **Cumulus Linux 5.14**.
 
 # Topology
 The lab runs the following topology: 
 
-![air_simulation-1](https://gitlab.com/cumulus-consulting/goldenturtle/cumulus_ansible_modules/-/raw/evpn_demo_nvue_5.x/testdrive_topology.png?ref_type=heads)    
+![air_simulation-1](https://gitlab.com/cumulus-consulting/goldenturtle/cumulus_ansible_modules/-/raw/evpn_demo_nvue_5.x/Workshop_topology_5.14.png?ref_type=heads)    
 
 # Login Credentials
 
