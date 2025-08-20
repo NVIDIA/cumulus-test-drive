@@ -60,6 +60,7 @@
     router:
       bgp:
         enable: on
+        router-id: 10.255.255.1
       vrr:
         enable: on
     system:
