@@ -18,6 +18,8 @@ The lab runs the following topology:
 | spine01 | cumulus | Cumu1usLinux! |
 | server01 | ubuntu | nvidia |
 | server02 | ubuntu | nvidia |
+| server03 | ubuntu | nvidia |
+| server04 | ubuntu | nvidia |
 
 # Lab 1: Verifying Lab Connectivity & Setup
 
@@ -71,20 +73,28 @@ TASK [Setting up the test hosts config] ****************************************
 Monday 29 July 2024  12:00:42 +0000 (0:00:00.026)       0:00:00.026 ***********
 ok: [server01]
 ok: [server02]
+ok: [server03]
+ok: [server04]
 
 TASK [install traceroute] ******************************************************
 Monday 29 July 2024  12:00:44 +0000 (0:00:01.480)       0:00:01.506 ***********
 ok: [server01]
 ok: [server02]
+ok: [server03]
+ok: [server04]
 
 TASK [flush arp] ***************************************************************
 Monday 29 July 2024  12:00:46 +0000 (0:00:01.879)       0:00:03.386 ***********
 changed: [server01]
 changed: [server02]
+changed: [server03]
+changed: [server04]
 
 PLAY RECAP *********************************************************************
 server01                   : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 server02                   : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+server03                   : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+server04                   : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 
 Monday 29 July 2024  12:00:47 +0000 (0:00:01.077)       0:00:04.464 ***********
 ===============================================================================
