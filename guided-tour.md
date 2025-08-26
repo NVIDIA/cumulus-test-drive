@@ -1,4 +1,4 @@
-This lab runs **Cumulus Linux 5.14**.
+This lab runs **Cumulus Linux 5.14.0**.
 
 # Cumulus Linux Test Drive: Lab Guide
 In order to complete Cumulus Linux Workshop, please follow the steps described in the lab guide PDF link below:  
