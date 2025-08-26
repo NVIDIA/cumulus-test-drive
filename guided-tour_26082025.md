@@ -8,10 +8,6 @@ The lab runs the following topology:
 
 ![air_simulation-1](https://gitlab.com/cumulus-consulting/goldenturtle/cumulus_ansible_modules/-/raw/evpn_demo_nvue_5.x/Workshop_topology_5.14.png?ref_type=heads)    
 
-
-# Lab guide PDF
-![here](CL5.14_Workshop_Lab-Guide.pdf)
-
 # Login Credentials
 
 | System Name | Username | Password |

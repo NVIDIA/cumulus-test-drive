@@ -12,24 +12,24 @@ ansible spine01:leaf01:leaf02:server01:server02 -m ping
 check_state
 
 
-### Lab 1
+### Lab 1 ###
 
 # initiate the lab steps that students use
-cd /home/ubuntu/Test-Drive-Automation
-check_state
-sudo git pull
-check_state
+#cd /home/ubuntu/Test-Drive-Automation
+#check_state
+#sudo git pull
+#check_state
 ansible-playbook start-lab.yml
 check_state
 
-### Lab 2
+### Lab 2 ###
 
 # initiate testing sequence for Lab 2
-cd /home/ubuntu
-git clone https://github.com/berkinkartal/virt-workshop-testing.git
+#cd /home/ubuntu
+#git clone https://github.com/berkinkartal/virt-workshop-testing.git
 
 #reset leaf01 and leaf02 to post Lab 2 setup
-cd /home/ubuntu/virt-workshop-testing
+#cd /home/ubuntu/virt-workshop-testing
 ansible-playbook lab2config.yml
 
 # Lab 2 verify
@@ -64,7 +64,7 @@ ansible server02 -a 'traceroute 10.0.10.101'
 ansible leaf01 -a 'nv show bridge domain br_default mac-table'
 ansible leaf02 -a 'nv show bridge domain br_default mac-table'
 
-### Lab 3
+### Lab 3 ###
 
 # reset spine01, leaf01 and leaf02 to post Lab 3 setup
 ansible-playbook lab3config.yml
