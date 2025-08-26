@@ -74,9 +74,6 @@ ansible spine01 -a 'sudo vtysh -c "show ip bgp summary"'
 ansible leaf01 -a 'sudo vtysh -c "show ip bgp summary"'
 ansible leaf02 -a 'sudo vtysh -c "show ip bgp summary"'
 
-# show BGP on the spine
-#ansible spine01 -a 'net show bgp'
-
 # ping server02 from server01 and perform traceroute to verify routing through spine
 ansible server01 -a 'ping -c 4 10.0.20.102'
 ansible server01 -a 'traceroute 10.0.20.102'
