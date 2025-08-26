@@ -70,9 +70,9 @@ ansible leaf02 -a 'nv show bridge domain br_default mac-table'
 ansible-playbook lab3config.yml
 
 # show BGP summaries from spine and leaf nodes
-ansible spine01 -a 'net show bgp summary'
-ansible leaf01 -a 'net show bgp summary'
-ansible leaf02 -a 'net show bgp summary'
+ansible spine01 -a 'sudo vtysh -c "show ip bgp summary"'
+ansible leaf01 -a 'sudo vtysh -c "show ip bgp summary"'
+ansible leaf02 -a 'sudo vtysh -c "show ip bgp summary"'
 
 # show BGP on the spine
 ansible spine01 -a 'net show bgp'
