@@ -44,6 +44,12 @@
             role: system-admin
       hostname: leaf02
     interface:
+      eth0:
+        ip:
+          address:
+            dhcp: {}
+          vrf: mgmt
+        type: eth
       bond0:
         bond:
           member:
