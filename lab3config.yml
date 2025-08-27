@@ -7,12 +7,11 @@
     - name: Drop the saved NVUE yaml file
       copy:
         src: testconfigs/after_lab3/{{inventory_hostname}}_config.yaml
-        dest: /tmp/auto.yaml
+        dest: /etc/nvue.d/startup.yaml
         owner: nvue
         group: nvue
         mode: 0644
       notify:
-        -  nvue config replace
         -  nvue config apply
   handlers:
     - name: nvue config replace
