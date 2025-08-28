@@ -4,7 +4,7 @@ This lab runs **Cumulus Linux 5.14.0**.
 In order to complete Cumulus Linux Workshop, please follow the steps described in the lab guide PDF link below:  
 
 # Lab guide PDF
-![here](https://github.com/NVIDIA/cumulus-test-drive/-/raw/main/CL5.14_Workshop_Lab-Guide.pdf)
+![here](https://gitlab.com/cumulus-consulting/goldenturtle/cumulus_ansible_modules/-/raw/evpn_demo_nvue_5.x/CL5.14_Workshop_Lab-Guide.pdf?ref_type=heads)  
 
 
 # Topology
