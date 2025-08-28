@@ -42,8 +42,8 @@
             full-name: cumulus,,,
             hashed-password: $5$.bZqNaSoq2PqQPCV$LKR8zu5u7whr1F8YRLYtOrO7NaF9kE7EEHw.ER3ylO4
             role: system-admin
-        global:
-          system-mac: 44:38:39:22:01:c1
+      global:
+        system-mac: 44:38:39:22:01:c1
       hostname: leaf02
     interface:
       eth0:
