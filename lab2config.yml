@@ -12,11 +12,11 @@
         group: nvue
         mode: 0644
       notify:
-        -  nvue config replace
+        -  nvue config patch
         -  nvue config apply
   handlers:
-    - name: nvue config replace
-      command: nv config replace /tmp/config.yaml
+    - name: nvue config patch
+      command: nv config patch /tmp/config.yaml
     - name: nvue config apply
       command: nv config apply -y
 
