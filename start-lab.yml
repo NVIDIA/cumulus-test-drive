@@ -9,6 +9,29 @@
 #          - netq-apps
 #          - netq-agent
 #        state: absent
+- hosts: leaf:spine
+  gather_facts: no
+  become: yes
+  tasks:
+    - name: Drop the saved NVUE yaml file
+      copy:
+        src: lab2-configurations/{{inventory_hostname}}/config.yaml
+        dest: /tmp/config.yaml
+        owner: nvue
+        group: nvue
+        mode: 0644
+      notify:
+        -  nvue config patch
+        -  nvue config apply
+        - restart switch
+  handlers:
+    - name: nvue config patch
+      command: nv config patch /tmp/config.yaml
+    - name: nvue config apply
+      command: nv config apply -y
+    - name: restart switch
+      command: reboot
+
 - hosts: host
   gather_facts: no
   tasks:
