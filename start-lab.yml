@@ -23,14 +23,14 @@
       notify:
         -  nvue config patch
         -  nvue config apply
-        - netq config restart agent
+#        - netq config restart agent
   handlers:
     - name: nvue config patch
       command: nv config patch /tmp/config.yaml
     - name: nvue config apply
       command: nv config apply -y
-    - name: netq config restart agent
-      command: netq config restart agent
+#    - name: netq config restart agent
+#      command: netq config restart agent
 
 - hosts: host
   gather_facts: no
