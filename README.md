@@ -18,13 +18,12 @@ The lab guide is available upon request and is provided to the attendees of the 
 | lab3.yml                     | lab3 yml file                      |
 | license.lic                  | license file                       |
 | start-lab.yml                | Script for starting the lab        |
-| testdrive_topology.png       | png format topology diagram        |
-| testdrive_topology.pptx      | pptx format topology diagram       |
-| testdrive_topology.svg       | svg format topology diagram        |
+| Workshop-topology.png        | png format topology diagram        |
+| Workshop-topology.json       | Topology file to be used in DSX Air|
 
 
 # Topology Diagram
-![air_simulation-1](https://gitlab.com/cumulus-consulting/goldenturtle/cumulus_ansible_modules/-/raw/evpn_demo_nvue_5.x/testdrive_topology.png?ref_type=heads)    
+![air_simulation-1](https://github.com/NVIDIA/cumulus-test-drive/Workshop-topology.png?ref_type=heads)    
 
 # virt-workshop-testing
 
