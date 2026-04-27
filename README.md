@@ -23,7 +23,7 @@ The lab guide is available upon request and is provided to the attendees of the 
 
 
 # Topology Diagram
-![air_simulation-1](https://github.com/NVIDIA/cumulus-test-drive/Workshop-topology.png?ref_type=heads)    
+![air_simulation-1](https://github.com/NVIDIA/cumulus-test-drive/blob/e5ed9b550e6199761ffc2784fe8ee7a44b701273/Workshop-topology.png)    
 
 # virt-workshop-testing
 
