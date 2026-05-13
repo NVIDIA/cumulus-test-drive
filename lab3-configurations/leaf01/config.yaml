@@ -44,7 +44,7 @@
       hostname: leaf01
     interface:
       lo:
-        ip:
+        ipv4:
           address:
             10.255.255.1/32: {}
         type: loopback
@@ -55,7 +55,7 @@
               access: 10
         type: swp
       vlan10:
-        ip:
+        ipv4:
           address:
             10.0.10.2/24: {}
           vrr:
