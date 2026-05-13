@@ -6,7 +6,7 @@
             '20': {}
     router:
       vrr:
-        enable: on
+        state: enabled
     system:
       aaa:
         class:
