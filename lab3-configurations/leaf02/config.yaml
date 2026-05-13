@@ -62,6 +62,6 @@
             address:
               10.0.20.1/24: {}
             mac-address: 00:00:00:00:1a:20
-            state: "enabled"
+            state: enabled
         type: svi
         vlan: 20
