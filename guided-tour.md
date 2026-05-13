@@ -1,10 +1,10 @@
-This lab runs **Cumulus Linux 5.14.0**.
+This lab runs **Cumulus Linux 5.16.1**.
 
 # Cumulus Linux Test Drive: Lab Guide
 In order to complete Cumulus Linux Workshop, please follow the steps described in the lab guide PDF link below:  
 
 # Lab guide PDF
-[Here](https://github.com/NVIDIA/cumulus-test-drive/blob/d0cef02815f0d305f405bcee43907c6b38b0560f/CL5.14_Workshop_Lab-Guide.pdf)  
+[Here](https://github.com/NVIDIA/cumulus-test-drive/blob/d0cef02815f0d305f405bcee43907c6b38b0560f/CL5.16_Workshop_Lab-Guide.pdf)  
 
 
 # Topology
