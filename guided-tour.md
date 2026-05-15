@@ -10,4 +10,4 @@ In order to complete Cumulus Linux Workshop, please follow the steps described i
 # Topology
 The lab runs the following topology: 
 
-![air_simulation-1](https://github.com/NVIDIA/cumulus-test-drive/blob/main/CL_Workshop.svg)
+![air_simulation-1](https://raw.githubusercontent.com/NVIDIA/cumulus-test-drive/refs/heads/main/Workshop-topology.png)
